@@ -42,18 +42,28 @@ while not frontier.empty():
 	public void dijkstra( PointGeoTemps depart , PointGeoTemps arrivee ){
 
 		this.pointActuel = depart ;
-		frontiere = new PriorityQueue< PointGeoTemps >() ;
-		coutJusqueLa = new HashMap < SommetPointGeo , Time >( grapheDePoints.getTaille() + 2 );
-		origine = new HashMap < SommetPointGeo , SommetPointGeo > ( grapheDePoints.getTaille() + 2 );
+		this.frontiere = new PriorityQueue< PointGeoTemps >( ) ;
+		this.coutJusqueLa = new HashMap < SommetPointGeo , Time >( grapheDePoints.getTaille( ) + 2 );
+		this.origine = new HashMap < SommetPointGeo , SommetPointGeo > ( grapheDePoints.getTaille( ) + 2 );
 		
-		origine.put( this.pointActuel.getSommetLie() , null) ;
-		coutJusqueLa.put( this.pointActuel.getSommetLie() , new Time(0) ) ;
+		this.origine.put( this.pointActuel.getSommetLie( ) , null ) ;
+		this.coutJusqueLa.put( this.pointActuel.getSommetLie( ) , new Time( 0 ) ) ;
 		
-		while (	! frontiere.isEmpty() 
+		while (	! this.frontiere.isEmpty( ) 
 			&& 	! this.pointActuel.estArrive( arrivee ) ){ 
 			
-			for( PointGeo voisin : this.pointActuel.getVoisins() ){
-				this.nouveauCout = new Time( this.pointActuel.getTempsMilliSecondes() + this.pointActuel.getDureeVoyage(voisin));
+			for( SommetPointGeo voisin : this.pointActuel.getVoisins( ) ){
+				
+				this.nouveauCout = new Time( this.pointActuel.getTempsMilliSecondes( ) + this.pointActuel.getDureeVoyage( voisin ) ) ;
+				
+				if(		! coutJusqueLa.containsKey( this.pointActuel )
+					||	this.nouveauCout.compareTo( this.coutJusqueLa.get( this.pointActuel ) ) < 0 ){
+					
+					this.coutJusqueLa.put( voisin , this.nouveauCout ) ;
+					this.frontiere.add( new PointGeoTemps( this.pointActuel.getSommetLie() , this.nouveauCout ) ) ;
+					this.origine.put( voisin , this.pointActuel.getSommetLie() ) ;
+					
+				}
 			}
 			
 			this.pointActuel = frontiere.remove() ;

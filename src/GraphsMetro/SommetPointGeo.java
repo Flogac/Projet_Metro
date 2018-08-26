@@ -20,7 +20,22 @@ public class SommetPointGeo extends PointGeo implements TraitementVoyage {
 	}
 	
 	public long getDureeVoyage( PointGeo destination ){
+		
+		if( destination instanceof Station )
+			return this.getDureeVoyageInt( (Station) destination ) ;
+		
+		if( destination instanceof Coordonnees )
+			return this.getDureeVoyageInt( (Station) destination ) ;
+		
+		return 0 ;
+	}
+	
+	private long getDureeVoyageInt( Station destination ){
 		return 0;
 	}
 
+	public long getDureeVoyageInt( Coordonnees destination ){
+		return 0;
+	}
+	
 }

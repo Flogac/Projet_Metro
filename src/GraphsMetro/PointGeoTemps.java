@@ -5,14 +5,20 @@ import java.util.List;
 
 public class PointGeoTemps implements Comparable<PointGeoTemps> , TraitementVoyage {
 
-	private Time temps = new Time(0); 
-	private SommetPointGeo sommetLie;
+	private Time temps ; 
+	private SommetPointGeo sommetLie ;
 	
-	public PointGeoTemps(double latitudeC, double longitudeC) {
-		this.setSommetLie(new SommetPointGeo( latitudeC , longitudeC ));
+	public PointGeoTemps( double latitudeC, double longitudeC ) {
+		this.setSommetLie(new SommetPointGeo( latitudeC , longitudeC )) ;
+		temps = new Time(0);
 		// TODO Auto-generated constructor stub
 	}
 
+	public PointGeoTemps( SommetPointGeo sommetALie , Time cout ) {
+		this.sommetLie = sommetALie ;
+		this.temps = cout ;
+	}
+	
 	@Override
 	public int compareTo(PointGeoTemps autreChemin) {
 		return this.temps.compareTo( autreChemin.getTemps() );
